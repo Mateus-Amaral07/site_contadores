@@ -1,20 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --color-primary: #010518;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Core Palette */
+  --color-primary: #030712; /* Deeper, richer nearly-black (Tailwind gray-950) */
   --color-primary-reverse: #ffffff;
-  --color-hushed: #6b7280;
-  --color-hushed-reverse: #9ca3af;
-  --color-accent: #25D366; /* WhatsApp Green */
-  --color-accent-hover: #1fad53;
+  --color-hushed: #9ca3af; /* Gray-400 */
+  --color-hushed-reverse: #4b5563; /* Gray-600 */
+  
+  /* Accent Palette - Brand Green with elegance */
+  --color-accent: #10b981; /* Emerald-500, slightly cooler and more sophisticated than standard WhatsApp green */
+  --color-accent-hover: #059669; /* Emerald-600 */
+  --color-accent-soft: rgba(16, 185, 129, 0.1);
+  --color-accent-glow: rgba(16, 185, 129, 0.25);
+  
+  /* Subtle Borders & Glassmorphism */
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-hover: rgba(255, 255, 255, 0.06);
+
+  --animate-shimmer: shimmer 3s infinite linear;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in-up: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fadeIn 1s ease-out forwards;
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%) skewX(-15deg); }
+    100% { transform: translateX(250%) skewX(-15deg); }
+  }
+  
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-33.33%); }
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+  }
+
+  @keyframes fadeInUp {
+    from { 
+      opacity: 0; 
+      transform: translateY(20px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-primary);
+  color: #f3f4f6; /* Gray-100 for better default contrast */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em; /* Tighter tracking for display typography */
 }
 
 .leading-trim {
@@ -25,11 +88,20 @@ body {
   text-wrap: balance;
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-33.33%); }
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.animate-marquee {
-  animation: marquee 20s linear infinite;
+::-webkit-scrollbar-track {
+  background: var(--color-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
 }
