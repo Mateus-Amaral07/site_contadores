@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Testimonials() {
+  const revealRef = useScrollReveal();
   const testimonials = [
     {
       quote: "A Capital Partners não apenas organiza nossos números, eles nos dão a clareza necessária para tomar decisões de investimento milionárias. É uma parceria indispensável.",
@@ -70,7 +72,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section id="clientes" className="relative bg-white py-28 lg:py-40 overflow-hidden border-t border-gray-100">
+    <section id="clientes" ref={revealRef} className="relative bg-white py-28 lg:py-40 overflow-hidden border-t border-gray-100">
       {/* Decorative Background mimicking the image's software/wave vibe but keeping brand colors subtle */}
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
@@ -81,7 +83,7 @@ export default function Testimonials() {
         
         {/* Header Section from Image */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl animate-hidden fade-up delay-100">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-primary mb-6 tracking-tight leading-[1.1]">
               O Que <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">Nossos Clientes</span> Dizem
             </h2>
@@ -91,7 +93,7 @@ export default function Testimonials() {
           </div>
           
           {/* Navigation Buttons */}
-          <div className="flex gap-4">
+          <div className="flex gap-4 animate-hidden fade-up delay-200">
             <button 
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}
@@ -126,11 +128,13 @@ export default function Testimonials() {
           className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-6 lg:gap-8 pb-8"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {testimonials.map((t, i) => (
-            <div 
-              key={i} 
-              className="snap-start shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-22px)] bg-white rounded-[2rem] p-10 xl:p-12 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 border border-gray-100 flex flex-col h-auto relative group"
-            >
+          {testimonials.map((t, i) => {
+            const delayClass = [300, 400, 500][i % 3];
+            return (
+              <div 
+                key={i} 
+                className={`snap-start shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-22px)] bg-white rounded-[2rem] p-10 xl:p-12 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 border border-gray-100 flex flex-col h-auto relative group animate-hidden fade-up delay-${delayClass}`}
+              >
               {/* Quote Icon & Stars */}
               <div className="flex justify-between items-start mb-8 -mt-2">
                 <Quote className="text-gray-100 w-16 h-16 -ml-4 -mt-4 transition-colors duration-500 group-hover:text-accent/10" fill="currentColor" />
@@ -165,7 +169,8 @@ export default function Testimonials() {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Pagination Dots */}

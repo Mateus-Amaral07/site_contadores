@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, ArrowUp, ArrowUpRight } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const faqs = [
   {
@@ -27,14 +28,15 @@ const faqs = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number>(0);
+  const revealRef = useScrollReveal();
 
   return (
-    <section id="faq" className="bg-[#fafafa] py-28 lg:py-40 relative">
+    <section id="faq" ref={revealRef} className="bg-[#fafafa] py-28 lg:py-40 relative">
       <div className="mx-auto w-full max-w-screen-2xl px-4 md:px-8 lg:px-12 xl:px-16">
         <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20">
           
           {/* Header Area */}
-          <div className="flex flex-col pt-4">
+          <div className="flex flex-col pt-4 animate-hidden fade-up">
             <div className="flex items-center gap-2 mb-6 text-accent font-semibold tracking-wide uppercase text-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
               FAQs
@@ -53,7 +55,7 @@ export default function FAQ() {
               return (
                 <div 
                   key={index}
-                  className="bg-white border border-gray-100 rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)]"
+                  className={`bg-white border border-gray-100 rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] animate-hidden fade-up delay-${(index % 4 + 1) * 100}`}
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? -1 : index)}

@@ -1,6 +1,9 @@
 import { ArrowRight, BarChart3, Calculator, Building2, ShieldCheck } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Services() {
+  const revealRef = useScrollReveal();
+
   const services = [
     {
       title: "Gestão Tributária",
@@ -29,11 +32,11 @@ export default function Services() {
   ];
 
   return (
-    <section id="solucoes" className="bg-[#fafafa] py-28 lg:py-40 relative">
+    <section id="solucoes" ref={revealRef} className="bg-[#fafafa] py-28 lg:py-40 relative">
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
       
       <div className="mx-auto w-full max-w-screen-2xl px-4 md:px-8 lg:px-12 xl:px-16">
-        <div className="max-w-3xl mb-20">
+        <div className="max-w-3xl mb-20 animate-hidden fade-up">
           <h2 className="text-xs font-sans font-bold text-accent uppercase tracking-[0.2em] mb-4">Nossas Soluções</h2>
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-primary tracking-tight mb-8 leading-[1.1]">
             Muito além do básico.
@@ -44,9 +47,11 @@ export default function Services() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {services.map((service, index) => (
-            <a key={index} href="#contato" className="group flex flex-col justify-between rounded-[2rem] bg-white border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:border-accent/30 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2">
-              <div className="p-8 lg:p-10 flex-grow">
+          {services.map((service, index) => {
+            const delayClass = [100, 200, 300, 400][index % 4];
+            return (
+              <a key={index} href="#contato" className={`group flex flex-col justify-between rounded-[2rem] bg-white border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:border-accent/30 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 animate-hidden fade-up delay-${delayClass}`}>
+                <div className="p-8 lg:p-10 flex-grow">
                 <div className="h-14 w-14 rounded-2xl bg-gray-50 flex items-center justify-center mb-8 border border-gray-100 transition-transform duration-500 group-hover:scale-110 group-hover:bg-accent/10 group-hover:border-accent/20">
                   {service.icon}
                 </div>
@@ -69,7 +74,8 @@ export default function Services() {
                 />
               </div>
             </a>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

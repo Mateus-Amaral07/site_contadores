@@ -1,6 +1,9 @@
 import { CheckCircle2 } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function About() {
+  const revealRef = useScrollReveal();
+
   const stats = [
     { value: "R$ 2B+", label: "Auditados anualmente" },
     { value: "15+", label: "Anos de mercado" },
@@ -15,7 +18,7 @@ export default function About() {
   ];
 
   return (
-    <section id="sobre" className="bg-primary py-28 lg:py-40 relative overflow-hidden">
+    <section id="sobre" ref={revealRef} className="bg-primary py-28 lg:py-40 relative overflow-hidden">
       {/* Background subtle glow */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[800px] h-[800px] opacity-10 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-accent),transparent_70%)] blur-[120px] rounded-full"></div>
@@ -25,7 +28,7 @@ export default function About() {
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
           {/* Image Side */}
-          <div className="relative order-2 lg:order-1 perspective-1000">
+          <div className="relative order-2 lg:order-1 perspective-1000 animate-hidden fade-scale">
             <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform rotate-x-1 hover:rotate-x-0 transition-transform duration-700 ease-out">
               <div className="absolute inset-0 bg-accent/10 mix-blend-overlay z-10"></div>
               <img 
@@ -38,21 +41,23 @@ export default function About() {
             </div>
 
             {/* Premium Stats Overlay */}
-            <div className="absolute -bottom-10 -right-4 sm:-right-8 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 sm:p-10 shadow-[0_30px_60px_rgba(0,0,0,0.6)] max-w-xs z-20 animate-float">
-              <div className="space-y-8 relative">
-                <div className="absolute -inset-4 bg-accent/20 blur-3xl rounded-full opacity-50 pointer-events-none"></div>
-                {stats.map((stat, index) => (
-                  <div key={index} className="flex flex-col relative z-10">
-                    <span className="text-4xl font-display font-bold text-white tracking-tight mb-1">{stat.value}</span>
-                    <span className="text-sm text-hushed font-medium tracking-wide uppercase">{stat.label}</span>
-                  </div>
-                ))}
+            <div className="absolute -bottom-10 -right-4 sm:-right-8 animate-hidden fade-up delay-300 z-20">
+              <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 sm:p-10 shadow-[0_30px_60px_rgba(0,0,0,0.6)] max-w-xs animate-float">
+                <div className="space-y-8 relative">
+                  <div className="absolute -inset-4 bg-accent/20 blur-3xl rounded-full opacity-50 pointer-events-none"></div>
+                  {stats.map((stat, index) => (
+                    <div key={index} className="flex flex-col relative z-10">
+                      <span className="text-4xl font-display font-bold text-white tracking-tight mb-1">{stat.value}</span>
+                      <span className="text-sm text-hushed font-medium tracking-wide uppercase">{stat.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
           {/* Text Side */}
-          <div className="order-1 lg:order-2 lg:pl-12">
+          <div className="order-1 lg:order-2 lg:pl-12 animate-hidden fade-up">
             <h2 className="text-xs font-sans font-bold text-accent uppercase tracking-[0.2em] mb-4">Nossa Essência</h2>
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight mb-8 leading-[1.1]">
               Não somos apenas contadores.<br/>
@@ -81,7 +86,7 @@ export default function About() {
 
             <a 
               href="#servicos" 
-              className="inline-flex items-center justify-center rounded-full bg-white text-primary px-8 py-4 text-sm font-semibold transition-all duration-300 hover:bg-gray-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary"
+              className="inline-flex items-center justify-center rounded-full bg-white text-primary px-8 py-4 text-sm font-semibold transition-all duration-300 hover:bg-gray-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary animate-hidden fade-bounce delay-200"
             >
               Conheça nossa metodologia
             </a>

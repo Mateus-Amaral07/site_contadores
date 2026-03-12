@@ -1,9 +1,12 @@
 import { Star, MessageCircle, ShieldCheck } from 'lucide-react';
 import SlidingToggleCTA from './ui/SlidingToggleCTA';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Hero() {
+  const revealRef = useScrollReveal();
+
   return (
-    <section className="relative overflow-hidden bg-primary pt-32 lg:pt-48 pb-16 lg:pb-32 flex min-h-screen items-center">
+    <section ref={revealRef} className="relative overflow-hidden bg-primary pt-32 lg:pt-48 pb-16 lg:pb-32 flex min-h-screen items-center">
       {/* Premium Background Atmosphere */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay"></div>
@@ -15,7 +18,7 @@ export default function Hero() {
       <div className="mx-auto w-full max-w-screen-2xl px-4 md:px-8 lg:px-12 xl:px-16 relative z-10">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-8 items-center">
           
-          <div className="max-w-2xl text-center lg:text-left mx-auto lg:mx-0 animate-fade-in-up">
+          <div className="max-w-2xl text-center lg:text-left mx-auto lg:mx-0 animate-hidden fade-up">
             <div className="mb-8 flex items-center justify-center lg:justify-start gap-4">
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4, 5].map((i) => (
@@ -44,19 +47,19 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center w-full gap-6 justify-center lg:justify-start">
-              <div className="transition-all duration-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] rounded-2xl w-full sm:w-auto flex justify-center lg:justify-start">
+              <div className="transition-all duration-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] rounded-2xl w-full sm:w-auto flex justify-center lg:justify-start animate-hidden fade-bounce delay-300">
                 <SlidingToggleCTA />
               </div>
               <a 
                 href="#servicos" 
-                className="flex items-center gap-2 w-full sm:w-auto justify-center rounded-full bg-white/5 hover:bg-white/10 text-white px-8 py-4 text-sm font-semibold transition-all duration-300 border border-white/10 hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+                className="flex items-center gap-2 w-full sm:w-auto justify-center rounded-full bg-white/5 hover:bg-white/10 text-white px-8 py-4 text-sm font-semibold transition-all duration-300 border border-white/10 hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] animate-hidden fade-bounce delay-400"
               >
                 Conheça as soluções
               </a>
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[600px] lg:max-w-none animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="relative mx-auto w-full max-w-[600px] lg:max-w-none animate-hidden fade-scale delay-200">
             <div className="relative aspect-[4/3] lg:aspect-square rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5 group">
               <div className="absolute inset-0 bg-accent/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-700 z-10"></div>
               <img 
@@ -68,13 +71,15 @@ export default function Hero() {
               <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-80 z-10"></div>
               
               {/* Premium Floating badge */}
-              <div className="absolute bottom-8 left-8 right-8 sm:right-auto bg-primary/40 backdrop-blur-xl border border-white/10 rounded-2xl p-5 flex items-center gap-5 shadow-2xl z-20 animate-float transform transition-transform hover:scale-105">
-                <div className="h-14 w-14 rounded-full bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center text-primary shadow-[0_0_15px_rgba(16,185,129,0.4)]">
-                  <ShieldCheck size={28} strokeWidth={2.5} />
-                </div>
+              <div className="absolute bottom-8 left-8 right-8 sm:right-auto animate-hidden fade-up delay-500 z-20">
+                <div className="bg-primary/40 backdrop-blur-xl border border-white/10 rounded-2xl p-5 flex items-center gap-5 shadow-2xl animate-float transform transition-transform hover:scale-105">
+                  <div className="h-14 w-14 rounded-full bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center text-primary shadow-[0_0_15px_rgba(16,185,129,0.4)]">
+                    <ShieldCheck size={28} strokeWidth={2.5} />
+                  </div>
                 <div>
                   <div className="text-white font-display font-semibold text-base mb-0.5">Auditoria Concluída</div>
-                  <div className="text-gray-400 text-sm font-medium">Sem ressalvas em 2023</div>
+                    <div className="text-gray-400 text-sm font-medium">Sem ressalvas em 2023</div>
+                  </div>
                 </div>
               </div>
             </div>
